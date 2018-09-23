@@ -9,25 +9,34 @@ router.get('/', (req,res)=>{
 })
 router.post('/', (req,res)=>{
   knex('reservations').where('table_id', req.body.table_id).then((data)=>{
+  //  console.log(req.body);
     if(data.length !=0){
-      console.log('table alredy booked!')
-      console.log(req.body);
-      return res.redirect('/tables')
+      console.log('table already booked!')
+      //console.log(req.body);
+      return res.send('table already booked!')
     }
-    knex('reservations').insert({
-      table_id: req.body.table_id,
-      start_time: req.body.start_time,
-      end_time: req.body.end_time,
-      guests: req.body.guests
-    })
-    .then(()=>{
-      res.redirect('/reservations');
-    })
-    .catch((err)=>{
-      console.log(err);
-    })
+      knex('tables').where('id', req.body.table_id)
+        .then((data1)=>{
+          var g = parseInt(req.body.guests);
+        //  console.log(data1[0].capacity);
+          //console.log(g)
 
-
+          if(g > data1[0].capacity){
+            return res.send('too many guests');
+          }
+          knex('reservations').insert({
+            table_id: req.body.table_id,
+            start_time: req.body.start_time,
+            end_time: req.body.end_time,
+            guests: req.body.guests
+          })
+          .then(()=>{
+            res.redirect('/reservations');
+          })
+          .catch((err)=>{
+            console.log(err);
+          })
+        })
   })
   //console.log(req.body)
 })
@@ -54,7 +63,7 @@ router.delete('/delete/:id', (req,res)=>{
 
 })
 
-router.post('/update',(req,res)=>{//////////updating
+router.post('/update',(req,res)=>{///// change to .put if you are using curl in console
   console.log(req.body)
   knex('reservations').update({
     guests: req.body.guests,

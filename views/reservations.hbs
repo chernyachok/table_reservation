@@ -16,7 +16,7 @@
           <td>{{this.start_time}}</td>
           <td>{{this.end_time}}</td>
           <td>{{this.guests}}</td>
-          <td><button  class="btn btn-danger delt" id="{{this.id}}">Delete</button></td>
+          <td><button  class="btn btn-danger delt" id="{{this.id}}">Delete</button><a href="/reservations/update/{{this.id}}" class="btn btn-info" >Edit</a></td>
         </tr>
         {{/each}}
         {{else}}

@@ -1,0 +1,14 @@
+<form method="post" enctype="Content-Type: application/json" action="/reservations">
+  <div class="form-group row">
+    <label  class="col-sm-2 col-form-label">Table id</label>
+    <div class="col-sm-10">
+      <input type="number" class="form-control" name="table_id" id="table_id" placeholder="table id.." value="{{data}}" >
+    </div>
+    <label  class="col-sm-2 col-form-label">Number of guests</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" name="guests" id="guests" placeholder="number..">
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-2 mt-sm-0">Reserve</button>
+  </div>
+</form>

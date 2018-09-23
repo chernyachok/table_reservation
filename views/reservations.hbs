@@ -1,0 +1,27 @@
+<div class="container">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Table id</th>
+        <th>From</th>
+        <th>Till</th>
+        <th>Capacity</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#if data}}
+        {{#each data}}
+        <tr>
+          <td>{{this.table_id}}</td>
+          <td>{{this.start_time}}</td>
+          <td>{{this.end_time}}</td>
+          <td>{{this.guests}}</td>
+          <td><button  class="btn btn-danger delt" id="{{this.id}}">Delete</button></td>
+        </tr>
+        {{/each}}
+        {{else}}
+        <h3>No reservations free</h3>
+      {{/if}}
+    </tbody>
+  </table>
+</div>

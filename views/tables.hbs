@@ -1,0 +1,29 @@
+<div>
+
+  <table class="table table-striped table-dark">
+  <thead>
+    <tr>
+    <!--  <th scope="col">ID</th>-->
+      <th scope="col">Table id</th>
+      <th scope="col">Capacity</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each data}}
+    <tr>
+    <!--  <th scope="row">{{@index}}</th>-->
+      <td>{{this.id}}</td>
+      <td>{{this.capacity}}</td>
+      <td><a href="/reservations/new/{{this.id}}" class="btn btn-info btn-xs " id="{{this.id}}">Reserve</a></td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+</div>
+{{#if reserved}}
+  Reserved tables id:
+  {{#each reserved}}
+    <p>{{this.table_id}}</p>
+  {{/each}}
+{{else}}<h3>All tables free!</h3>
+{{/if}}

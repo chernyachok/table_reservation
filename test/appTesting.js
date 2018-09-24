@@ -3,6 +3,9 @@ const kx = require('../knexfile.js').development.connection
 
 
 describe('App', ()=>{
+  beforeEach(function(){
+    console.log('starting to test..')
+  })
   it('Host checking', ()=>{
     assert.equal(kx.host, 'localhost')
   })

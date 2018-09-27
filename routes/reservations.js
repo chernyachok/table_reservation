@@ -4,12 +4,14 @@ const knex = require('knex')(config);
 
 router.get('/', (req,res)=>{
   knex('reservations').then((data)=>{
-    res.render('reservations', {data: data});
+    res.header('Access-Control-Allow-Origin', '*');
+    res.json(data)
+    //res.render('reservations', {data: data});
   })
 })
 router.post('/', (req,res)=>{
   knex('reservations').where('table_id', req.body.table_id).then((data)=>{
-  //  console.log(req.body);
+    console.log(req.body);
     if(data.length !=0){
       console.log('table already booked!')
       //console.log(req.body);
@@ -31,7 +33,8 @@ router.post('/', (req,res)=>{
             guests: req.body.guests
           })
           .then(()=>{
-            res.redirect('/reservations');
+          //  res.redirect('/reservations');
+          res.json('reserved new item')
           })
           .catch((err)=>{
             console.log(err);

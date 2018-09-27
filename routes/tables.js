@@ -7,7 +7,7 @@ router.get('/', (req,res)=>{
     knex('reservations').then((reserved)=>{
       res.render('tables', {data: data, reserved: reserved});
     })
-
+//branch mocha
   })
 })
 module.exports = router;

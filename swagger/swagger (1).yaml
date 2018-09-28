@@ -1,0 +1,146 @@
+swagger: '2.0'
+info:
+  description: This is a sample server of table booking
+  version: 1.0.0
+  title: TABLE RESERVATION
+  termsOfService: 'http://swagger.io/terms/'
+  contact:
+    email: apiteam@swagger.io
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+host: 'localhost:3000'
+basePath: /
+tags:
+  - name: reserve
+    description: reservations
+    externalDocs:
+      description: Find out more
+      url: 'http://swagger.io'
+  - name: store
+    description: Access to  booking
+  - name: user
+    description: Operations about table booking
+
+schemes:
+  - https
+  - http
+paths:
+  /reservations:
+    get:
+      tags:
+        - reserve
+      summary: Getting all reservations
+      description: getting reservations
+      operationId: tables
+      produces:
+        - application/json
+      responses:
+        '405':
+          description: Invalid input
+    post:
+      tags:
+        - reserve
+      summary: Creating a reservation
+      description: ''
+      operationId: creatingRes
+      consumes:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            properties:
+              table_id:
+                type: integer
+              start_time:
+                type: string
+              end_time:
+                type: string
+              guests:
+                type: integer
+      responses:
+        '200':
+          description: successful operation
+         
+        '400':
+          description: Invalid info supplied
+
+  '/reservations/update/':
+    
+    put:
+      tags:
+        - reserve
+      summary: Updating a reservation
+      description: This can only be done by the logged in user.
+      operationId: updateRes
+      produces:
+        - application/xml
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: reservation that needs to be updated
+          required: true
+          type: integer
+        - in: body
+          name: body
+          description: Update reservation info
+          required: true
+          schema:
+            $ref: '#/definitions/Updatereserve'
+      responses:
+        '400':
+          description: Invalid id supplied
+        '404':
+          description: id not found
+  '/reservations/delete/{id}':
+    delete:
+      tags:
+        - reserve
+      summary: Deleting a reservation
+      description: This can only be done by the logged in user.
+      operationId: deleteReserve
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: reservation id that needs to be deleted
+          required: true
+          type: integer
+      responses:
+        '400':
+          description: Invalid id supplied
+        '404':
+          description: id not found
+
+definitions:
+  Makereserve:
+    type: object
+    properties:
+      tableid:
+        type: integer
+      start_time:
+        type: string
+      end_time:
+        type: string
+      guests:
+        type: integer
+  Updatereserve:
+    type: object
+    properties:
+      current_id:
+        type: integer
+      start_time:
+        type: string
+      end_time:
+        type: string
+      guests:
+        type: integer
+  
+  
+externalDocs:
+  description: Find out more about Swagger
+  url: 'http://swagger.io'

@@ -18,6 +18,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static('public'));
 
+
+
+
 app.engine('hbs', expressHbs({defaultLayout: 'layout', extname: 'hbs', layoutsDir:'views/layouts'}));
 app.set('views', path.join(__dirname,'views'));
 app.set('view engine', 'hbs');

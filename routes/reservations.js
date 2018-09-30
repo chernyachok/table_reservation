@@ -5,7 +5,7 @@ const knex = require('knex')(config);
 router.get('/', (req,res)=>{
   knex('reservations').then((data)=>{
     res.header('Access-Control-Allow-Origin', '*');
-    res.json(data)
+    res.status(200).json(data)
     //res.render('reservations', {data: data});
   })
 })
@@ -34,7 +34,7 @@ router.post('/', (req,res)=>{
           })
           .then(()=>{
           //  res.redirect('/reservations');
-          res.json('reserved new item')
+          res.status(201).json('reserved new item')
           })
           .catch((err)=>{
             console.log(err);
@@ -61,20 +61,20 @@ router.delete('/delete/:id', (req,res)=>{
   console.log('delete'+req.params.id)
   knex('reservations').delete().where('id', req.params.id)
   .then((data)=>{
-    res.send('deleted'+data+' reservation');
+    res.status(202).json({msg : "deleted reservation"});
   })
 
 })
 
-router.post('/update',(req,res)=>{///// change to .put if you are using curl in console
+router.put('/update',(req,res)=>{///// change to .put if you are using curl in console
   console.log(req.body)
   knex('reservations').update({
     guests: req.body.guests,
     start_time: req.body.start_time,
     end_time: req.body.end_time
   }).where('id', req.body.current_id).then(()=>{
-    res.redirect('/reservations');
-
+    //res.redirect('/reservations');
+    res.status(201).json({msg: "updated successfully"})
   })
 
 })

@@ -1,6 +1,10 @@
 var router = require('express').Router();
 var config = require('../knexfile')[process.env.DB_DEV];
 const knex = require('knex')(config);
+//const send = require('../config/sendsocket.js')
+//const receive = require('../config/receivesocket.js')
+
+
 
 router.get('/', (req,res)=>{
   knex('reservations').then((data)=>{
@@ -9,40 +13,22 @@ router.get('/', (req,res)=>{
     //res.render('reservations', {data: data});
   })
 })
-router.post('/', (req,res)=>{
-  knex('reservations').where('table_id', req.body.table_id).then((data)=>{
-    console.log(req.body);
-    if(data.length !=0){
-      console.log('table already booked!')
-      //console.log(req.body);
-      return res.send('table already booked!')
-    }
-      knex('tables').where('id', req.body.table_id)
-        .then((data1)=>{
-          var g = parseInt(req.body.guests);
-        //  console.log(data1[0].capacity);
-          //console.log(g)
 
-          if(g > data1[0].capacity){
-            return res.send('too many guests');
-          }
-          knex('reservations').insert({
-            table_id: req.body.table_id,
-            start_time: req.body.start_time,
-            end_time: req.body.end_time,
-            guests: req.body.guests
-          })
-          .then(()=>{
-          //  res.redirect('/reservations');
-          res.status(201).json('reserved new item')
-          })
-          .catch((err)=>{
-            console.log(err);
-          })
-        })
-  })
-  //console.log(req.body)
+const send = require('../config/send');
+require('../config/receive')
+router.post('/',(req,res)=>{
+  var createReserve = {
+        table_id: req.body.table_id,
+        guests: req.body.guests,
+        user_email: "john.doe@gmail.com",//req.user_email
+        start_time: req.body.start_time,///////////"2018-09-28 21:00:00"
+        reservation_duration: req.body.reservation_duration
+  }
+//  console.log(createReserve)
+  send(createReserve)
 })
+
+
 
 router.get('/new/:id', (req,res)=>{
   res.render('new', {data: req.params.id})

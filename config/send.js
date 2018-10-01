@@ -6,7 +6,8 @@ var send = msg=>{
 
       const eventKey = 'keyboardcat';
       ch.assertQueue(eventKey, { durable: true });
-      ch.sendToQueue(eventKey,
+
+      ch.sendToQueue(eventKey,//reservation queue
        new Buffer(JSON.stringify(msg)),
        { persistent: true }
       );

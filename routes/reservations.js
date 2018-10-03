@@ -44,10 +44,13 @@ router.get('/update/:id', (req,res)=>{
 
 
 router.delete('/delete/:id', (req,res)=>{
-  console.log('delete'+req.params.id)
+
   knex('reservations').delete().where('id', req.params.id)
   .then((data)=>{
-    res.status(202).json({msg : "deleted reservation"});
+    if(data){
+       console.log('delete'+req.params.id)
+       res.status(202).json({msg : "deleted reservation"});
+    }
   })
 
 })

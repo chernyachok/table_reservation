@@ -1,0 +1,5 @@
+.env
+/node_modules/**
+/swagger-editor/**
+receiver.js
+sender.js
